@@ -1,0 +1,33 @@
+.task-div {
+    margin: 10px;
+    display: flex;
+    align-items: normal;
+    display: grid;
+    grid-template-columns: 500px;
+}
+
+.task-card {
+    margin: 10px;
+    color: #000;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+}
+
+.task-card button {
+    height: 40px;
+    margin-left: auto;
+}
+
+.Low {
+    background-color: rgb(150, 252, 167);
+}
+
+.Medium {
+    background-color: rgb(255, 201, 151);
+}
+
+.High {
+    background-color: rgb(255, 129, 150);
+}
+
