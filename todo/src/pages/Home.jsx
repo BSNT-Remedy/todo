@@ -9,7 +9,13 @@ function Home() {
   return (
     <div className="main-content">
       <h1>TODO APP</h1>
-      <button onClick={() => setTaskModalOpen(true)}>+ New Task</button>
+      <button 
+        onClick={() => setTaskModalOpen(true)} 
+        className='add-task-btn'
+      >
+        + New Task
+      </button>
+      
       <TaskModal isOpen={taskModalOpen} onClose={() => setTaskModalOpen(false)}/>
       <TaskCard/>
     </div>

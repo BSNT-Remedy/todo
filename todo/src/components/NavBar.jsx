@@ -4,7 +4,7 @@ import '../css/NavBar.css'
 function NavBar() {
     return <nav className="nav-bar">
         <div className="nav-app">
-            <Link to="/" className="nav-app-link">Todo App</Link>
+            <Link to="/" className="nav-app-link">TODO</Link>
         </div>
 
         <div className="navbar-links">
