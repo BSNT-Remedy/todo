@@ -1,6 +1,10 @@
 import '../css/TaskCard.css';
+import { useTodo } from '../contexts/TodoContext';
 
-function TaskCard({todo, setTodo}) {
+function TaskCard() {
+
+    const {todo, setTodo} = useTodo();
+
     const handleDone = (index) => {
         console.log("nag run ba to")
         setTodo(prev => prev.filter((_, i) => i !== index));
