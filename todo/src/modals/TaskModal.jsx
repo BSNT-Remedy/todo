@@ -9,14 +9,16 @@ function TaskModal({ isOpen, onClose }) {
     const [task, setTask] = useState("");
     const [tag, setTag] = useState("");
     const [prio, setPrio] = useState("");
+    const [date, setDate] = useState("");
 
     const handleSubmit = () => {
         console.log('nag run to')
         if(!task || !tag || !prio) return;
-        setTodo(prev => [...prev, {taskName: task, tag: tag, priority: prio}]);
+        setTodo(prev => [...prev, {taskName: task, tag: tag, priority: prio, due: date}]);
     
         setTask(prev => prev = "");
         setPrio(prev => prev = "");
+        setDate(prev => prev = "");
         onClose();
     }
 
@@ -30,14 +32,7 @@ function TaskModal({ isOpen, onClose }) {
                 <input 
                     value={task} 
                     onChange={(e) => setTask(e.target.value)} placeholder='Enter task name...'
-                    style={{
-                        width: '100%',
-                        padding: '10px',
-                        border: '2px solid #ddd',
-                        borderRadius: '5px',
-                        fontSize: '16px',
-                        boxSizing: 'border-box'
-                    }}
+                    className='todo-inputs-style'
                     autoFocus
                 />
             </div>
@@ -47,14 +42,7 @@ function TaskModal({ isOpen, onClose }) {
                 <select 
                     value={tag} 
                     onChange={(e) => setTag(e.target.value)}
-                    style={{
-                        width: '100%',
-                        padding: '10px',
-                        border: '2px solid #ddd',
-                        borderRadius: '5px',
-                        fontSize: '16px',
-                        boxSizing: 'border-box'
-                    }}
+                    className='todo-inputs-style'
                 >
                     <option disabled value="">Select Tag</option>
                     <option value="School">School</option>
@@ -68,14 +56,7 @@ function TaskModal({ isOpen, onClose }) {
                 <select 
                     value={prio} 
                     onChange={(e) => setPrio(e.target.value)}
-                    style={{
-                        width: '100%',
-                        padding: '10px',
-                        border: '2px solid #ddd',
-                        borderRadius: '5px',
-                        fontSize: '16px',
-                        boxSizing: 'border-box'
-                    }}
+                    className='todo-inputs-style'
                 >
                     <option disabled value="">Select Priority</option>
                     <option value="Low">Low</option>
@@ -83,21 +64,24 @@ function TaskModal({ isOpen, onClose }) {
                     <option value="High">High</option>
                 </select>
             </div>
+
+            <div>
+                <label>Date</label>
+                <input 
+                    type="date"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                    className='todo-inputs-style'
+                />
+            </div>
             
             <div style={{ display: 'flex', gap: '10px', marginTop: '20px'}}>
                 <button 
                     onClick={onClose}
                     style={{
-                        flex: 1,
-                        padding: '12px',
-                        backgroundColor: '#f44336',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '5px',
-                        fontSize: '16px',
-                        cursor: 'pointer',
-                        fontWeight: '500'
+                        backgroundColor: '#f44336'
                     }}
+                    className='new-task-btn'
                 >
                     Cancel
                 </button>
@@ -105,16 +89,9 @@ function TaskModal({ isOpen, onClose }) {
                 <button 
                     onClick={handleSubmit}
                     style={{
-                        flex: 1,
-                        padding: '12px',
-                        backgroundColor: '#4CAF50',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '5px',
-                        fontSize: '16px',
-                        cursor: 'pointer',
-                        fontWeight: '500'
+                        backgroundColor: '#4CAF50'
                     }}
+                    className='new-task-btn'
                 >
                     Add
                 </button>

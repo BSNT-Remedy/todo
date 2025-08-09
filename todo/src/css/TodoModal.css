@@ -14,7 +14,16 @@
     background: rgb(241, 212, 176);
     padding: 20px;
     width: 300px;
-    height: 300px;
+    height: 380px;
+}
+
+.todo-inputs-style {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
 }
 
 .todo-inputs label {
@@ -23,4 +32,15 @@
     margin-top: 10px;
     font-weight: 500;
     color: black;
+}
+
+.new-task-btn {
+    flex: 1;
+    padding: 12px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 500;
 }
