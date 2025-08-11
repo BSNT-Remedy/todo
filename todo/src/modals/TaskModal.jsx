@@ -14,7 +14,7 @@ function TaskModal({ isOpen, onClose }) {
     const handleSubmit = () => {
         console.log('nag run to')
         if(!task || !tag || !prio) return;
-        setTodo(prev => [...prev, {taskName: task, tag: tag, priority: prio, due: date}]);
+        setTodo(prev => [...prev, {taskName: task, tag: tag, priority: prio, due: date, isDone: false}]);
     
         setTask(prev => prev = "");
         setPrio(prev => prev = "");
@@ -68,7 +68,7 @@ function TaskModal({ isOpen, onClose }) {
             <div>
                 <label>Date</label>
                 <input 
-                    type="date"
+                    type="datetime-local"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
                     className='todo-inputs-style'

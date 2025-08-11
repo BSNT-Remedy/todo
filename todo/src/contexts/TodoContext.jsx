@@ -20,9 +20,20 @@ export const TodoProvider = ({children}) => {
         console.log("change todo: ", todo);
     }, [todo])
 
+    const handleDone = (task) => {
+        const updatedTodo = [...todo].map((t) => {
+            if(t === task){
+                return {...t, isDone: true};
+            } 
+            return t;
+        });
+        setTodo(updatedTodo);
+    }
+
     const value = {
         todo,
-        setTodo
+        setTodo,
+        handleDone
     }
 
     return <TodoContext.Provider value={value}>

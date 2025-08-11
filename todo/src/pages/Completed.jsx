@@ -1,7 +1,11 @@
+import TaskCard from "../components/TaskCard";
 
 function Completed() {
     return(
-        <h1>Complete mo to</h1>
+        <div>
+            <h1>Complete mo to</h1>
+            <TaskCard/>
+        </div>
     )
 }
 

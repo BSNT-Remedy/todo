@@ -1,18 +1,33 @@
 import '../css/TaskCard.css';
 import { useTodo } from '../contexts/TodoContext';
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 function TaskCard() {
-
-    const {todo, setTodo} = useTodo();
+    const {todo, setTodo, handleDone} = useTodo();
     const [sortCondition, setSortCondition] = useState("dateAdded")
     const [sortedTodo, setSortedTodo] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const location = useLocation();
 
     useEffect(() => {
         setIsLoading(true)
 
-        let sorted = [...todo];
+        let sorted = [];
+        console.log(location.pathname);
+
+        switch(location.pathname) {
+            case "/": 
+                sorted = [...todo].filter(a => 
+                    a && new Date(a.due).getTime() > Date.now() && !a.isDone
+                ); break;
+            case "/missed": 
+                sorted = [...todo].filter(a => 
+                    a && new Date(a.due).getTime() < Date.now() && !a.isDone
+                ); break;
+            case "/completed":
+                sorted = [...todo].filter(a => a.isDone === true);
+        }
 
         switch (sortCondition) {
             case "dueDate":
@@ -28,13 +43,9 @@ function TaskCard() {
         setIsLoading(false);
     }, [sortCondition, todo])
 
-    const handleDone = (index) => {
-        setTodo(prev => prev.filter((_, i) => i !== index));
-    }
-
     const DueDate = ({date}) => {
         const due = new Date(date);
-        return <p>{due.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</p>
+        return <p>{due.toLocaleDateString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })}</p>
     }
 
     function priorityInWord(level) {
@@ -57,7 +68,7 @@ function TaskCard() {
                     <option value="priority">Priority</option>
                 </select>
             </div>
-            <p>sort condition: {sortCondition}</p>
+
             {isLoading ? <div>Loading...</div> : 
                 <div>
                     {sortedTodo.map((t, i) => (
@@ -67,7 +78,7 @@ function TaskCard() {
                                 <p>{t.tag} - {priorityInWord(t.priority)}</p>
                                 <DueDate date={t.due}/>
                             </div>
-                            <button onClick={() => handleDone(i)}>Done</button>
+                            <button onClick={() => handleDone(t)}>Done</button>
                         </div>
                     ))}
                 </div>
