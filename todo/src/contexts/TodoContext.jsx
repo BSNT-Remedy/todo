@@ -20,9 +20,9 @@ export const TodoProvider = ({children}) => {
         console.log("change todo: ", todo);
     }, [todo])
 
-    const handleDone = (task) => {
+    const handleDone = (taskId) => {
         const updatedTodo = [...todo].map((t) => {
-            if(t === task){
+            if(t.id === taskId){
                 return {...t, isDone: true};
             } 
             return t;

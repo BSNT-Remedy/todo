@@ -78,7 +78,9 @@ function TaskCard() {
                                 <p>{t.tag} - {priorityInWord(t.priority)}</p>
                                 <DueDate date={t.due}/>
                             </div>
-                            <button onClick={() => handleDone(t)}>Done</button>
+                            {location.pathname !== "/completed" && (
+                                <button onClick={() => handleDone(t.id)}>Done</button>
+                            )}
                         </div>
                     ))}
                 </div>

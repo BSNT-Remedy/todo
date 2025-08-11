@@ -5,7 +5,7 @@ import { useTodo } from "../contexts/TodoContext";
 function TaskModal({ isOpen, onClose }) {
     if(!isOpen) return null;
 
-    const {setTodo} = useTodo();
+    const {todo, setTodo} = useTodo();
     const [task, setTask] = useState("");
     const [tag, setTag] = useState("");
     const [prio, setPrio] = useState("");
@@ -14,7 +14,7 @@ function TaskModal({ isOpen, onClose }) {
     const handleSubmit = () => {
         console.log('nag run to')
         if(!task || !tag || !prio) return;
-        setTodo(prev => [...prev, {taskName: task, tag: tag, priority: prio, due: date, isDone: false}]);
+        setTodo(prev => [...prev, {id: Number(todo.length) ,taskName: task, tag: tag, priority: prio, due: date, isDone: false}]);
     
         setTask(prev => prev = "");
         setPrio(prev => prev = "");
