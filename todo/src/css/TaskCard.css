@@ -19,15 +19,15 @@
     margin-left: auto;
 }
 
-.Low {
+.priority3 {
     background-color: rgb(150, 252, 167);
 }
 
-.Medium {
+.priority2 {
     background-color: rgb(255, 201, 151);
 }
 
-.High {
+.priority1 {
     background-color: rgb(255, 129, 150);
 }
 

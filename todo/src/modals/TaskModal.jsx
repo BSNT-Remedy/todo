@@ -59,9 +59,9 @@ function TaskModal({ isOpen, onClose }) {
                     className='todo-inputs-style'
                 >
                     <option disabled value="">Select Priority</option>
-                    <option value="Low">Low</option>
-                    <option value="Medium">Medium</option>
-                    <option value="High">High</option>
+                    <option value={3}>Low</option>
+                    <option value={2}>Medium</option>
+                    <option value={1}>High</option>
                 </select>
             </div>
 
@@ -78,9 +78,7 @@ function TaskModal({ isOpen, onClose }) {
             <div style={{ display: 'flex', gap: '10px', marginTop: '20px'}}>
                 <button 
                     onClick={onClose}
-                    style={{
-                        backgroundColor: '#f44336'
-                    }}
+                    style={{ backgroundColor: '#f44336'}}
                     className='new-task-btn'
                 >
                     Cancel
@@ -88,9 +86,7 @@ function TaskModal({ isOpen, onClose }) {
 
                 <button 
                     onClick={handleSubmit}
-                    style={{
-                        backgroundColor: '#4CAF50'
-                    }}
+                    style={{ backgroundColor: '#4CAF50' }}
                     className='new-task-btn'
                 >
                     Add
