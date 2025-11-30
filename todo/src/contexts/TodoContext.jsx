@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import { useLocation } from 'react-router-dom';
 
 const TodoContext = createContext();
 
@@ -6,19 +7,28 @@ export const useTodo = () => useContext(TodoContext);
 
 export const TodoProvider = ({children}) => {
     const [todo, setTodo] = useState([]);
+    const location = useLocation();
 
     useEffect(() => {
-        const saved = localStorage.getItem('todo');
-        if(saved) {
-        setTodo(JSON.parse(saved));
-        console.log("first render: ", JSON.parse(saved))
+        console.log('pathname: ', location.pathname);
+        getTasks(location.pathname);
+    }, [location])
+
+    const getTasks = async (pathname) => {
+        let status = ''
+
+        switch(pathname){
+            case '/': status = 'ongoing'; break;
+            case '/missed': status = 'missed'; break;
+            case '/completed': status = 'completed'; break;
         }
-    }, [])
+        
+        const tasks = await fetch(`http://127.0.0.1:8000/todo/?status=${status}`);
+        const data = await tasks.json() 
 
-    useEffect(() => {
-        localStorage.setItem('todo', JSON.stringify(todo));
-        console.log("change todo: ", todo);
-    }, [todo])
+        console.log('data: ', data);
+        setTodo(data);
+    }
 
     const handleDone = (taskId) => {
         const updatedTodo = [...todo].map((t) => {

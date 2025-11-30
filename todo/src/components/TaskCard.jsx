@@ -7,27 +7,11 @@ function TaskCard() {
     const {todo, setTodo, handleDone} = useTodo();
     const [sortCondition, setSortCondition] = useState("dateAdded")
     const [sortedTodo, setSortedTodo] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
     const location = useLocation();
 
     useEffect(() => {
-        setIsLoading(true)
 
-        let sorted = [];
-        console.log(location.pathname);
-
-        switch(location.pathname) {
-            case "/": 
-                sorted = [...todo].filter(a => 
-                    a && new Date(a.due).getTime() > Date.now() && !a.isDone
-                ); break;
-            case "/missed": 
-                sorted = [...todo].filter(a => 
-                    a && new Date(a.due).getTime() < Date.now() && !a.isDone
-                ); break;
-            case "/completed":
-                sorted = [...todo].filter(a => a.isDone === true);
-        }
+        let sorted = [...todo];
 
         switch (sortCondition) {
             case "dueDate":
@@ -40,7 +24,6 @@ function TaskCard() {
         }
 
         setSortedTodo(sorted);
-        setIsLoading(false);
     }, [sortCondition, todo])
 
     const DueDate = ({date}) => {
@@ -69,22 +52,20 @@ function TaskCard() {
                 </select>
             </div>
 
-            {isLoading ? <div>Loading...</div> : 
-                <div>
-                    {sortedTodo.map((t, i) => (
-                        <div key={i} className={`task-card priority${t.priority}`}>
-                            <div className='task-card-content'>
-                                <b>{t.taskName}</b>
-                                <p>{t.tag} - {priorityInWord(t.priority)}</p>
-                                <DueDate date={t.due}/>
-                            </div>
-                            {location.pathname !== "/completed" && (
-                                <button onClick={() => handleDone(t.id)}>Done</button>
-                            )}
+            <div>
+                {sortedTodo.map((t, i) => (
+                    <div key={t.id} className={`task-card priority${t.priority}`}>
+                        <div className='task-card-content'>
+                            <b>{t.taskName}</b>
+                            <p>{t.tag} - {priorityInWord(t.priority)}</p>
+                            <DueDate date={t.due}/>
                         </div>
-                    ))}
-                </div>
-            }
+                        {location.pathname !== "/completed" && (
+                            <button onClick={() => handleDone(t.id)}>Done</button>
+                        )}
+                    </div>
+                ))}
+            </div>
         </div>
     )
 }
