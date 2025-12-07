@@ -1,16 +1,14 @@
 import '../css/TaskCard.css';
 import { useTodo } from '../contexts/TodoContext';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 
 function TaskCard() {
     const {todo, setTodo, handleDone} = useTodo();
     const [sortCondition, setSortCondition] = useState("dateAdded")
-    const [sortedTodo, setSortedTodo] = useState([]);
     const location = useLocation();
 
-    useEffect(() => {
-
+    const sortedTodo = useMemo(() => {
         let sorted = [...todo];
 
         switch (sortCondition) {
@@ -23,10 +21,10 @@ function TaskCard() {
                 break;
         }
 
-        setSortedTodo(sorted);
+        return sorted
     }, [sortCondition, todo])
 
-    const DueDate = ({date}) => {
+    function DueDate({date}) {
         const due = new Date(date);
         return <p>{due.toLocaleDateString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })}</p>
     }

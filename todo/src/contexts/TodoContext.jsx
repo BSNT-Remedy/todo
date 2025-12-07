@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useCallback, useMemo } from "react";
 import { useLocation } from 'react-router-dom';
 
 const TodoContext = createContext();
@@ -8,10 +8,10 @@ export const useTodo = () => useContext(TodoContext);
 export const TodoProvider = ({children}) => {
     const [todo, setTodo] = useState([]);
     const location = useLocation();
+    const pathname = location.pathname;
 
     useEffect(() => {
-        console.log('pathname: ', location.pathname);
-        getTasks(location.pathname);
+        getTasks(pathname);
     }, [location])
 
     const getTasks = async (pathname) => {
@@ -22,7 +22,6 @@ export const TodoProvider = ({children}) => {
             case '/missed': status = 'missed'; break;
             case '/completed': status = 'completed'; break;
         }
-        
         const tasks = await fetch(`http://127.0.0.1:8000/todo/?status=${status}`);
         const data = await tasks.json() 
 
@@ -31,19 +30,20 @@ export const TodoProvider = ({children}) => {
     }
 
     const handleDone = (taskId) => {
-        const updatedTodo = [...todo].map((t) => {
-            if(t.id === taskId){
-                return {...t, isDone: true};
-            } 
-            return t;
-        });
-        setTodo(updatedTodo);
+        // const updatedTodo = [...todo].map((t) => {
+        //     if(t.id === taskId){
+        //         return {...t, isDone: true};
+        //     } 
+        //     return t;
+        // });
+        // setTodo(updatedTodo);
     }
 
     const value = {
         todo,
         setTodo,
-        handleDone
+        handleDone,
+        getTasks,
     }
 
     return <TodoContext.Provider value={value}>
