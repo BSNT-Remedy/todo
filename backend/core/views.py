@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from rest_framework import generics
 from .serializers import TaskSerializer
 from .models import Task
@@ -60,4 +60,12 @@ def newTask(request):
     return JsonResponse({"message": "Invalid"}, status=405)
 
 
+@csrf_exempt
+def doneTask(request, pk):
+    if request.method == 'POST':
+        task = get_object_or_404(Task, pk=pk)
+        task.isDone = True
+        task.save(update_fields=['isDone'])
+        return JsonResponse({'message': 'Task marked as done', 'isDone': True})
 
+    return JsonResponse({'error': 'Invalid request'}, status=400)

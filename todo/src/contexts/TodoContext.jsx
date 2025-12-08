@@ -29,14 +29,19 @@ export const TodoProvider = ({children}) => {
         setTodo(data);
     }
 
-    const handleDone = (taskId) => {
-        // const updatedTodo = [...todo].map((t) => {
-        //     if(t.id === taskId){
-        //         return {...t, isDone: true};
-        //     } 
-        //     return t;
-        // });
-        // setTodo(updatedTodo);
+    const handleDone = async (taskId) => {
+
+        try {
+            const res = await fetch(`http://127.0.0.1:8000/todo/done/${taskId}/`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            });
+        } catch (error) {
+            console.error(error)
+        }
+        getTasks(pathname)
     }
 
     const value = {
