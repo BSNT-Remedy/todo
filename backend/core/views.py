@@ -61,12 +61,15 @@ def newTask(request):
 
 
 @csrf_exempt
-def doneTask(request, pk):
+def toggleIsDone(request, pk):
     if request.method == 'POST':
         task = get_object_or_404(Task, pk=pk)
-        task.isDone = True
+        task.isDone = not task.isDone
         task.save(update_fields=['isDone'])
-        return JsonResponse({'message': 'Task marked as done', 'isDone': True})
+        if task.isDone:
+            return JsonResponse({'message': 'Task marked as done', 'isDone': True})
+        else:
+            return JsonResponse({'message': 'Undo marked as done', 'isDone': False})
 
     return JsonResponse({'error': 'Invalid request'}, status=400)
 

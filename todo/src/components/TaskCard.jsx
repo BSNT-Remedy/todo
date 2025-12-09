@@ -66,9 +66,16 @@ function TaskCard() {
                             <DueDate date={t.due}/>
                         </div>
                         <div className="buttons">
-                            {location.pathname !== "/completed" && (
+                            {/* {location.pathname !== "/completed" ? (
                                 <button onClick={() => handleDone(t.id)}>Done</button>
-                            )}
+                            ) : (
+                                <button onClick={() => handleDone(t.id)}>Undo</button>
+                            )} */}
+                            <button onClick={() => handleDone(t.id)}>
+                                {location.pathname === "/completed" 
+                                    ? "Undo" : "Done"
+                                }
+                            </button>
                             <button onClick={() => (
                                 setShowConfirmModal(true),
                                 setCurrentTask(t)
