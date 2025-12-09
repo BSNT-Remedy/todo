@@ -7,6 +7,8 @@ export const useTodo = () => useContext(TodoContext);
 
 export const TodoProvider = ({children}) => {
     const [todo, setTodo] = useState([]);
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const [currentTask, setCurrentTask] = useState({});
     const location = useLocation();
     const pathname = location.pathname;
 
@@ -44,11 +46,26 @@ export const TodoProvider = ({children}) => {
         getTasks(pathname)
     }
 
+    const handleDelete = async (taskId) => {
+        try{
+            const res = await fetch(`http://127.0.0.1:8000/todo/delete/${taskId}/`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            });
+        } catch (error) {
+            console.error(error)
+        }
+        getTasks(pathname)
+    }
+
     const value = {
-        todo,
-        setTodo,
-        handleDone,
+        todo, setTodo,
+        handleDone, handleDelete,
         getTasks,
+        showConfirmModal, setShowConfirmModal,
+        currentTask, setCurrentTask,
     }
 
     return <TodoContext.Provider value={value}>

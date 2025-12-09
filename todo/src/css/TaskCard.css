@@ -14,8 +14,10 @@
     align-items: center;
 }
 
-.task-card button {
-    height: 40px;
+.buttons {
+    display: flex;
+    height: 2em;
+    gap: 0.1em;
     margin-left: auto;
 }
 

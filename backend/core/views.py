@@ -69,3 +69,12 @@ def doneTask(request, pk):
         return JsonResponse({'message': 'Task marked as done', 'isDone': True})
 
     return JsonResponse({'error': 'Invalid request'}, status=400)
+
+
+@csrf_exempt
+def deleteTask(request, pk):
+    if request.method == "POST":
+        task = get_object_or_404(Task, pk=pk)
+        task.delete()
+        return JsonResponse({"message": "Task deleted"})
+    return JsonResponse({"error": "Invalid request"}, status=400)

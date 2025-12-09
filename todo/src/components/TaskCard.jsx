@@ -2,9 +2,16 @@ import '../css/TaskCard.css';
 import { useTodo } from '../contexts/TodoContext';
 import { useState, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
+import ConfirmModal from '../modals/ConfirmModal';
 
 function TaskCard() {
-    const {todo, setTodo, handleDone} = useTodo();
+    const {
+        todo, setTodo, 
+        handleDone, handleDelete, 
+        showConfirmModal, setShowConfirmModal,
+        currentTask, setCurrentTask,
+    } = useTodo();
+
     const [sortCondition, setSortCondition] = useState("dateAdded")
     const location = useLocation();
 
@@ -58,12 +65,19 @@ function TaskCard() {
                             <p>{t.tag} - {priorityInWord(t.priority)}</p>
                             <DueDate date={t.due}/>
                         </div>
-                        {location.pathname !== "/completed" && (
-                            <button onClick={() => handleDone(t.id)}>Done</button>
-                        )}
+                        <div className="buttons">
+                            {location.pathname !== "/completed" && (
+                                <button onClick={() => handleDone(t.id)}>Done</button>
+                            )}
+                            <button onClick={() => (
+                                setShowConfirmModal(true),
+                                setCurrentTask(t)
+                            ) }>Delete</button>
+                        </div>
                     </div>
                 ))}
             </div>
+            {showConfirmModal && <ConfirmModal/>}
         </div>
     )
 }
