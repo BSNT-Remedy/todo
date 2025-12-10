@@ -2,7 +2,7 @@ import TaskCard from "../components/TaskCard";
 
 function Completed() {
     return(
-        <div>
+        <div className="main-content">
             <h1>Complete mo to</h1>
             <TaskCard/>
         </div>

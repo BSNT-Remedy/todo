@@ -4,7 +4,7 @@ import TaskCard from "../components/TaskCard";
 function Missed() {
 
     return (
-        <div>
+        <div className="main-content">
             <h1>Missed Task</h1>
             <TaskCard />
         </div>
