@@ -3,19 +3,22 @@ import Completed from "./pages/Completed";
 import Missed from "./pages/Missed";
 import NavBar from "./components/NavBar"
 import {Routes, Route} from 'react-router-dom';
-import { TodoProvider } from "./contexts/TodoContext";
+import { useTodo } from "./contexts/TodoContext";
+import TaskModal from "./modals/TaskModal";
 
 function App() {
+  const {taskModalOpen, setTaskModalOpen} = useTodo();
+
   return (
     <div>
-      <TodoProvider>
-        <NavBar />
-        <Routes>
-          <Route path="/" element={<Home/>}/>
-          <Route path="/completed" element={<Completed/>}/>
-          <Route path="/missed" element={<Missed/>}/>
-        </Routes>
-      </TodoProvider>
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<Home/>}/>
+        <Route path="/completed" element={<Completed/>}/>
+        <Route path="/missed" element={<Missed/>}/>
+      </Routes>
+
+      <TaskModal isOpen={taskModalOpen} onClose={() => setTaskModalOpen(false)}/>
     </div>
   )
 }

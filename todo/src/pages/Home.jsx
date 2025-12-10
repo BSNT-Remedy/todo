@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import TaskCard from '../components/TaskCard';
-import TaskModal from '../modals/TaskModal';
+import { useTodo } from '../contexts/TodoContext';
 import '../css/Home.css'
 
 function Home() {
-  const [taskModalOpen, setTaskModalOpen] = useState(false);
-  
+  const {setTaskModalOpen} = useTodo();
+
   return (
     <div className="main-content">
       <h1>TODO APP</h1>
@@ -15,8 +15,7 @@ function Home() {
       >
         + New Task
       </button>
-      
-      <TaskModal isOpen={taskModalOpen} onClose={() => setTaskModalOpen(false)}/>
+
       <TaskCard/>
     </div>
   )

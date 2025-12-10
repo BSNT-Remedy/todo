@@ -7,7 +7,8 @@ import ConfirmModal from '../modals/ConfirmModal';
 function TaskCard() {
     const {
         todo, setTodo, 
-        handleDone, handleDelete, 
+        handleDone, handleDelete,
+        setTaskModalOpen,
         showConfirmModal, setShowConfirmModal,
         currentTask, setCurrentTask,
     } = useTodo();
@@ -66,16 +67,19 @@ function TaskCard() {
                             <DueDate date={t.due}/>
                         </div>
                         <div className="buttons">
-                            {/* {location.pathname !== "/completed" ? (
-                                <button onClick={() => handleDone(t.id)}>Done</button>
-                            ) : (
-                                <button onClick={() => handleDone(t.id)}>Undo</button>
-                            )} */}
                             <button onClick={() => handleDone(t.id)}>
                                 {location.pathname === "/completed" 
                                     ? "Undo" : "Done"
                                 }
                             </button>
+                            {location.pathname !== "/completed" && 
+                                <button className="edit" onClick={() => (
+                                    setTaskModalOpen(true),
+                                    setCurrentTask(t)
+                                )}>
+                                    Edit
+                                </button>
+                            }
                             <button onClick={() => (
                                 setShowConfirmModal(true),
                                 setCurrentTask(t)

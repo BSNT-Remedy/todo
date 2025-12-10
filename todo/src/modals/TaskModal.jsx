@@ -6,11 +6,17 @@ import { useLocation } from 'react-router-dom';
 function TaskModal({ isOpen, onClose }) {
     if(!isOpen) return null;
 
-    const {todo, setTodo, getTasks} = useTodo();
-    const [task, setTask] = useState("");
-    const [tag, setTag] = useState("");
-    const [prio, setPrio] = useState("");
-    const [date, setDate] = useState("");
+    const {
+        todo, setTodo, 
+        task, setTask,
+        tag, setTag,
+        prio, setPrio,
+        date, setDate,
+        getTasks,
+        handleEdit,
+        currentTask, setCurrentTask,
+    } = useTodo();
+    
     const location = useLocation();
     const pathname = location.pathname;
 
@@ -35,8 +41,10 @@ function TaskModal({ isOpen, onClose }) {
         onClose();
 
         setTask(prev => prev = "");
+        setTag(prev => prev = "");
         setPrio(prev => prev = "");
         setDate(prev => prev = "");
+        console.log("current task: ", currentTask);
         getTasks(pathname);
     }
 
@@ -44,7 +52,7 @@ function TaskModal({ isOpen, onClose }) {
         onClick={(e) => e.target === e.currentTarget && onClose()} 
         >
 
-        <form onSubmit={handleSubmit}>
+        <form>
             <div className='todo-inputs'>
                 <div>
                     <label>Task Name</label>
@@ -103,14 +111,24 @@ function TaskModal({ isOpen, onClose }) {
                         Cancel
                     </button>
 
-                    <button
-                        type="submit"
-                        style={{ backgroundColor: '#4CAF50' }}
-                        className='new-task-btn'
-                    >
-                        Add
-                    </button>
-                    
+                    {Object.keys(currentTask).length !== 0 
+                        ? <button
+                            type="button"
+                            onClick={handleEdit}
+                            style={{ backgroundColor: '#4CAF50' }}
+                            className='new-task-btn'
+                        >
+                            Save
+                        </button>
+                        : <button
+                            type="button"
+                            onClick={handleSubmit}
+                            style={{ backgroundColor: '#4CAF50' }}
+                            className='new-task-btn'
+                        >
+                            Add
+                        </button>
+                    }
                 </div>
             </div>
         </form>

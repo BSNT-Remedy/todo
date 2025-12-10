@@ -73,6 +73,32 @@ def toggleIsDone(request, pk):
 
     return JsonResponse({'error': 'Invalid request'}, status=400)
 
+@csrf_exempt
+def editTask(request, pk):
+    if request.method == "POST":
+        task = get_object_or_404(Task, pk=pk)
+
+        data = json.loads(request.body)
+
+        taskName = data.get('task')
+        tag = data.get('tag')
+        due = data.get('due')
+        prio = data.get('prio')
+
+        try:
+            due_date = datetime.fromisoformat(due)
+        except:
+            return JsonResponse({"error": "Invalid date"}, status=400)
+        
+        task.taskName = taskName
+        task.tag = tag
+        task.due = due_date
+        task.priority = int(prio)
+
+        task.save(update_fields=['taskName', 'tag', 'due', 'priority'])
+
+        return JsonResponse({"message": "Task updated!"})
+
 
 @csrf_exempt
 def deleteTask(request, pk):
