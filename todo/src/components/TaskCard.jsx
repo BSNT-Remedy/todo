@@ -49,15 +49,18 @@ function TaskCard() {
 
     return (
         <div className="task-div">
-            <div>
-                Filter by: 
-                <select value={sortCondition} onChange={(e) => setSortCondition(e.target.value)}>
-                    <option value="dateAdded">Date added</option>
-                    <option value="dueDate">Due Date</option>
-                    <option value="priority">Priority</option>
-                </select>
-            </div>
-
+            {console.log("todo: ", todo)}
+            {todo.length > 0 && 
+                <div>
+                    Filter by: 
+                    <select value={sortCondition} onChange={(e) => setSortCondition(e.target.value)}>
+                        <option value="dateAdded">Date added</option>
+                        <option value="dueDate">Due Date</option>
+                        <option value="priority">Priority</option>
+                    </select>
+                </div>
+            }
+            
             <div>
                 {sortedTodo.map((t, i) => (
                     <div key={t.id} className={`task-card priority${t.priority}`}>
